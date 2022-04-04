@@ -1,24 +1,98 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import UserTable from "./components/UserTable";
+import { v4 as uuidv4 } from 'uuid';
+import AddUserForm from "./components/AddUserForm";
+import EditUserForm from "./components/EditUserForm";
+import Header from "./Header";
+import Footer from "./Footer";
+
+
 
 function App() {
+
+  const usersData = [
+    { id: uuidv4(), name: 'Tania',email:'mail@email.com' , website:'site.com',comments:'Loren Upsun Dolor' },
+    { id: uuidv4(), name: 'Craig',email:'mail@email.com' , website:'site.com',comments:'Loren Upsun Dolor' },
+    { id: uuidv4(), name: 'Ben', email:'mail@email.com' , website:'site.com' ,comments:'Loren Upsun Dolor'},
+  ]
+
+  const [users, setUsers] = useState(usersData)
+
+  //Agregar Datos
+  const addUser = (user) => {
+    user.id = uuidv4()
+    setUsers([
+      ...users,
+      user 
+    ])
+  }
+
+  //Eliminar Comentarios 
+  const deleteUser = (id) =>{
+    console.log(id)
+    setUsers(users.filter(user => user.id !== id))
+
+  }
+
+  //Editar Comentarios
+  const [editing, setEditing] = useState(false);
+  const [currentUser, setCurrentUser] = useState({
+    id: null,
+    name: '' ,
+    email: '' ,
+    website:  '',
+    comments: '' ,
+  });
+  const editRow = (user) => {
+    setEditing(true);
+    setCurrentUser({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      website: user.website,
+      comments: user.comments
+    })
+  }
+
+  //Update Comentarios
+  const updateUser = (id, updateUser) => {
+    setEditing(false);
+    setUsers(users.map(user => (user.id === id ? updateUser : user)))
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <><><Header />
+
+      <div className='container'>
+
+
+        <div className="flex-row">
+          <div className="flex-large">
+            <h2 className="titles">Ver comentarios</h2>
+            <UserTable
+              users={users}
+              deleteUser={deleteUser}
+
+              editRow={editRow} />
+          </div><hr></hr>
+
+          {editing ? (
+            <div className="flex-large">
+              <h2 className="titles" id="title"> Edición de comentarios</h2>
+              <EditUserForm
+                currentUser={currentUser}
+                updateUser={updateUser} />
+            </div>
+          ) : (<div className="flex-large">
+            <h2 id="title" className="titles"> Creación de comentarios</h2>
+            <AddUserForm addUser={addUser} />
+          </div>)}
+
+        </div>
+
+
+      </div></><Footer /></>
   );
 }
 
