@@ -11,13 +11,13 @@ import Footer from "./Footer";
 function App() {
 
   const usersData = [
-    { id: uuidv4(), name: 'Tania',email:'mail@email.com' , website:'site.com',comments:'Loren Upsun Dolor' },
-    { id: uuidv4(), name: 'Craig',email:'mail@email.com' , website:'site.com',comments:'Loren Upsun Dolor' },
-    { id: uuidv4(), name: 'Ben', email:'mail@email.com' , website:'site.com' ,comments:'Loren Upsun Dolor'},
+    { id: uuidv4(), name: 'Miguel',email:'mail@email.com' , website:'site.com',comments:'Loren Upsun Dolor' },
+    { id: uuidv4(), name: 'Jairo',email:'mail@email.com' , website:'site.com',comments:'Loren Upsun Dolor' },
+    { id: uuidv4(), name: 'Jimena', email:'mail@email.com' , website:'site.com' ,comments:'Loren Upsun Dolor'},
   ]
 
   const [users, setUsers] = useState(usersData)
-
+  
   //Agregar Datos
   const addUser = (user) => {
     user.id = uuidv4()
